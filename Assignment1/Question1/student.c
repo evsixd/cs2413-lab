@@ -15,8 +15,21 @@
 
 void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
 
- // TODO: implement
+    // nums2 into nums1 | m is nums1 legit elements | n is nums1 placeholders
+    nums1Size++;
+    nums2Size++;
 
-
-
+    for(int i = 0; i < n; i++) {
+        nums1[i + m] = nums2[i];
+    }
+    for(int i = 0; i < n + m; i++) {
+        for(int j = i; j < n + m; j++) {
+            if(nums1[j] < nums1[i]) {
+                int stow = nums1[j];
+                nums1[j] = nums1[i];
+                nums1[i] = stow;
+                continue;
+            }
+        }
+    }
 }
