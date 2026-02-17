@@ -28,32 +28,83 @@
 #include <stdbool.h>
 #include <stddef.h>  // size_t
 #include <string.h>  // strlen
+#include <stdlib.h>
+
+typedef struct {
+    int size; // always 1 over actual highest index
+    int top; // always set to next potential active index
+    char *elements;
+} Stack;
+
+void resizeStack(Stack *stack) { // set stack size before calling
+    if(stack->size == 0) {
+        free(stack->elements);
+    }
+    stack->elements = malloc(sizeof(char) * stack->size);
+    stack->top = 0;
+}
+
+bool push(Stack *stack, char push) { // returns true if successful
+    if(stack->top == stack->size) {
+        return false;
+    }
+    stack->elements[stack->top] = push;
+    stack->top++;
+    return true;
+}
+
+bool pop(Stack *stack) { // returns true if successful
+    if(stack->top <= 0) {
+        return false;
+    }
+    //stack->elements[stack->top - 1] = ' ';
+    stack->top--;
+    return true;
+}
+
+char peek(Stack *stack) {
+    if(stack->top == 0) {
+        return ' ';
+    }
+    return stack->elements[stack->top - 1];
+}
+
+bool corresponds(char open, char close) {
+    if(open == '(' && close == ')') {
+        return true;
+    } else if(open == '[' && close == ']') {
+        return true;
+    } else if(open == '{' && close == '}') {
+        return true;
+    }
+    return false;
+}
 
 bool isValid(const char *s) {
-    // TODO: Implement using a stack.
-    //
-    // Recommended approach:
-    // - Use a char array as a stack to store opening brackets.
-    // - Scan the string from left to right:
-    //   - If you see an opening bracket, push it.
-    //   - If you see a closing bracket:
-    //       * stack must not be empty
-    //       * top of stack must match the closing bracket type
-    //       * then pop
-    // - At the end, stack must be empty.
-    //
-    // Helpful matching pairs:
-    //   ')' matches '('
-    //   ']' matches '['
-    //   '}' matches '{'
-    //
-    // Corner cases:
-    // - s == NULL -> return false
-    // - odd length strings can’t be valid 
-    //
-    // Note:
-    // - Input contains only bracket characters, per the prompt.
 
-    (void)s; // remove after implementing
-    return false; // placeholder
+    int sLength = strlen(s);
+
+    Stack myStack = {.size = sLength};
+    resizeStack(&myStack);
+
+    for(int i = 0; i < sLength; i++) {
+        if(s[i] == '(' || s[i] == '[' || s[i] == '{') { // if OPEN BRACKET
+            push(&myStack, s[i]);
+        } else if(s[i] == ')' || s[i] == ']' || s[i] == '}') { // if CLOSE BRACKET
+            if(myStack.top == 0) {
+                return false; // if a CLOSE is present without any OPENs
+            }
+            if(corresponds(peek(&myStack), s[i])) { // if the OPEN and CLOSE are the same type of bracket, then...
+                pop(&myStack);
+            } else { // if brackets do not correspond
+                return false;
+            }
+        }
+    }
+
+    if(myStack.top > 0) { // if there are any leftover brackets
+        return false;
+    }
+
+    return true; // if all fails pass by
 }
