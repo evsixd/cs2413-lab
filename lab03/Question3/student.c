@@ -14,5 +14,19 @@
 
 bool hasCycle(struct ListNode *head) {
     // TODO: implement
+    struct ListNode* leader = head;
+    struct ListNode* follower = head;
 
+    while(1) {
+        if(leader == NULL || leader->next == NULL || leader->next->next == NULL) {
+            return false;
+        }
+        leader = leader->next->next;
+        follower = follower->next;
+
+        if(leader == follower) {
+            return true;
+        }
+    }
+    return false;
 }
