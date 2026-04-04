@@ -13,7 +13,23 @@
 int count_isolated(Graph* g) {
     // TODO: implement
     // return -1;
-   
+    int count = 0;
+    int dim = sizeof(g->adj[0]) / sizeof(int);
+
+    for(int i = 0; i < dim; i++) {
+        int zeros = 1;
+        for(int j = 0; j < dim; j++) {
+            if(g->adj[i][j] == 1) {
+                zeros = 0;
+                break;
+            }
+        }
+        if(zeros) {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 

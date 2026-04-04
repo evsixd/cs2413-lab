@@ -1,4 +1,5 @@
 #include "graph.h"
+#include <stdio.h>
 // Question 1 — Count Number of Edges
 // Description
 
@@ -14,6 +15,18 @@ int count_edges(Graph* g) {
     // TODO: implement
     // return -1;
 
+    int count = 0;
+    int dim = sizeof(g->adj[0])/sizeof(int);
+
+    for(int i = 0; i < dim; i++) {
+        for(int j = 0; j < i; j++) {
+            if(g->adj[i][j] == 1) {
+                count++;
+            }
+        }
+    }
+
+    return count;
 }
 
 
