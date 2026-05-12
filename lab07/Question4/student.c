@@ -36,7 +36,7 @@ void insertionSort(int arr[], int size) {
         for(int i = 0; i < ind; i++) {
             arr[i] = arr[i+1];
         }
-        arr[ind] = stow;
+        arr[ind] = reStow;
         sorted++;
     }
 
