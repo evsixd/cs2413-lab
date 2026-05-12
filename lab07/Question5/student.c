@@ -21,7 +21,20 @@ Notes:
 */
 
 void selectionSort(int arr[], int size) {
-    // TODO: implement selection sort
+    int sorted = 0;
+    while(sorted < size) {
+        int highest = 0;
+        for(int i = 1; i < size - sorted; i++) {
+            if(arr[i] > arr[highest]) {
+                highest = i;
+            }
+        }
+        int stow = arr[highest];
+        arr[highest] = arr[size - sorted - 1];
+        arr[size - sorted - 1] = stow;
+
+        sorted++;
+    }
     (void)arr;
     (void)size;
 }

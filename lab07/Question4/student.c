@@ -20,7 +20,26 @@ Notes:
 */
 
 void insertionSort(int arr[], int size) {
-    // TODO: implement insertion sort
+
+    int sorted = 1;
+    // initiate base case for loop
+
+    while(sorted < size) {
+        int ind = size - 1;
+        while(arr[0] <= arr[ind]) {
+            ind--;
+            if(ind == size - sorted - 1) {
+                break;
+            }
+        }
+        int reStow = arr[0];
+        for(int i = 0; i < ind; i++) {
+            arr[i] = arr[i+1];
+        }
+        arr[ind] = stow;
+        sorted++;
+    }
+
     (void)arr;
     (void)size;
 }
